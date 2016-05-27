@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class AddFriendModel;
+@class AddFriendModelFrame;
 
 @interface AddFriendView : UIView
 
-@property (nonatomic,strong) AddFriendModel *addFriendModel;
+@property (nonatomic,strong) AddFriendModelFrame *addFriendModelFrame;
 
 @end

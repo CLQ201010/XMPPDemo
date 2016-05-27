@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class AddFriendModel;
+@class AddFriendModelFrame;
 
 @interface AddFriendTableCell : UITableViewCell
 
-@property (nonatomic,strong) AddFriendModel *addFriendModel;
+@property (nonatomic,strong) AddFriendModelFrame *addFriendModelFrame;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView identifier:(NSString *)identifier;
 

@@ -7,8 +7,7 @@
 //
 
 #import "AddFriendView.h"
-#import "AddFriendModel.h"
-#define marginLeft 20
+#import "AddFriendModelFrame.h"
 
 @interface AddFriendView ()
 
@@ -60,10 +59,18 @@
     self.arrowImgView = arrowImgView;
 }
 
-- (void)setAddFriendModel:(AddFriendModel *)addFriendModel
+- (void)setAddFriendModelFrame:(AddFriendModelFrame *)addFriendModelFrame
 {
-    _addFriendModel = addFriendModel;
-    //设置位置
+    _addFriendModelFrame = addFriendModelFrame;
+    
+    self.titleLbl.frame = _addFriendModelFrame.titleFrame;
+    self.titleLbl.text = _addFriendModelFrame.addFriendModel.title;
+    
+    self.subTitleLbl.frame = _addFriendModelFrame.subTitleFrame;
+    self.subTitleLbl.text = _addFriendModelFrame.addFriendModel.subTitle;
+    
+    self.iconImgView.frame = _addFriendModelFrame.headFrame;
+    self.iconImgView.image = [UIImage imageNamed:_addFriendModelFrame.addFriendModel.icon];
 }
 
 @end

@@ -45,6 +45,7 @@
 		234F38B31C4E0F8800562779 /* PhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 234F38B21C4E0F8800562779 /* PhotoController.m */; };
 		2370A26B1C96E5BC00985E48 /* UserSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2370A26A1C96E5BB00985E48 /* UserSearchModel.m */; };
 		2370A26E1C98076300985E48 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2370A26C1C98076300985E48 /* Localizable.strings */; };
+		23B5A2691CEAEE0F00490CCB /* AddFriendModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B5A2681CEAEE0F00490CCB /* AddFriendModelFrame.m */; };
 		23C6A1791C44B90E00DAD20D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C6A1781C44B90E00DAD20D /* main.m */; };
 		23C6A17C1C44B90E00DAD20D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C6A17B1C44B90E00DAD20D /* AppDelegate.m */; };
 		23C6A1841C44B90E00DAD20D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23C6A1831C44B90E00DAD20D /* Assets.xcassets */; };
@@ -185,6 +186,8 @@
 		2370A26A1C96E5BB00985E48 /* UserSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSearchModel.m; sourceTree = "<group>"; };
 		2370A26D1C98076300985E48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2370A26F1C9808BC00985E48 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		23B5A2671CEAEE0F00490CCB /* AddFriendModelFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendModelFrame.h; sourceTree = "<group>"; };
+		23B5A2681CEAEE0F00490CCB /* AddFriendModelFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendModelFrame.m; sourceTree = "<group>"; };
 		23C6A1741C44B90E00DAD20D /* XmppDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XmppDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23C6A1781C44B90E00DAD20D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		23C6A17A1C44B90E00DAD20D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -490,6 +493,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		23B5A2661CEAEDC100490CCB /* 添加好友 */ = {
+			isa = PBXGroup;
+			children = (
+				234CF7891CA3C8C100BB2060 /* AddFriendModel.h */,
+				234CF78A1CA3C8C100BB2060 /* AddFriendModel.m */,
+				23B5A2671CEAEE0F00490CCB /* AddFriendModelFrame.h */,
+				23B5A2681CEAEE0F00490CCB /* AddFriendModelFrame.m */,
+			);
+			name = "添加好友";
+			sourceTree = "<group>";
+		};
 		23C6A16B1C44B90D00DAD20D = {
 			isa = PBXGroup;
 			children = (
@@ -752,12 +766,11 @@
 		23F71C6C1C474DA300468BC4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				23B5A2661CEAEDC100490CCB /* 添加好友 */,
 				23FAE1EC1C5251CD0019018E /* ContacterModel.h */,
 				23FAE1ED1C5251CD0019018E /* ContacterModel.m */,
 				2370A2691C96E5BB00985E48 /* UserSearchModel.h */,
 				2370A26A1C96E5BB00985E48 /* UserSearchModel.m */,
-				234CF7891CA3C8C100BB2060 /* AddFriendModel.h */,
-				234CF78A1CA3C8C100BB2060 /* AddFriendModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1221,6 +1234,7 @@
 				23C6A17C1C44B90E00DAD20D /* AppDelegate.m in Sources */,
 				234F38B31C4E0F8800562779 /* PhotoController.m in Sources */,
 				230B3EF21C5A3D2C009274D7 /* SendTextView.m in Sources */,
+				23B5A2691CEAEE0F00490CCB /* AddFriendModelFrame.m in Sources */,
 				230B3EF51C5A3F1F009274D7 /* MessageFrameModel.m in Sources */,
 				230B3F161C5A42F2009274D7 /* HMEmotion.m in Sources */,
 				23F71C941C47C1F000468BC4 /* BadgeButton.m in Sources */,

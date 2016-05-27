@@ -8,7 +8,7 @@
 
 #import "AddFriendController.h"
 #import "AddFriendTableCell.h"
-#import "AddFriendModel.h"
+#import "AddFriendModelFrame.h"
 
 @interface AddFriendController ()
 
@@ -39,19 +39,19 @@
     {
         _datas = [[NSMutableArray alloc] init];
 
-        AddFriendModel *radar = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_addRadarFriend", comment:@"雷达加朋友") subTitle:NSLocalizedString(@"Contacter_text_addRadarFriendTip", comment:@"添加身边的朋友") icon:@""];
+        AddFriendModel *radar = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_addRadarFriend", comment:@"雷达加朋友") subTitle:NSLocalizedString(@"Contacter_text_addRadarFriendTip", comment:@"添加身边的朋友") icon:@"me_icon_emoji"];
         [_datas addObject:radar];
         
-        AddFriendModel *group = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_createGroup", comment:@"面对面建群") subTitle:NSLocalizedString(@"Contacter_text_createGroupTip", comment:@"与身边的朋友进入同一个群聊") icon:@""];
+        AddFriendModel *group = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_createGroup", comment:@"面对面建群") subTitle:NSLocalizedString(@"Contacter_text_createGroupTip", comment:@"与身边的朋友进入同一个群聊") icon:@"me_icon_emoji"];
         [_datas addObject:group];
         
-        AddFriendModel *scabQr = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_scanQr", comment:@"扫一扫") subTitle:NSLocalizedString(@"Contacter_text_scanQrTip", comment:@"扫描二维码名片") icon:@""];
+        AddFriendModel *scabQr = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_scanQr", comment:@"扫一扫") subTitle:NSLocalizedString(@"Contacter_text_scanQrTip", comment:@"扫描二维码名片") icon:@"me_icon_emoji"];
         [_datas addObject:scabQr];
         
-        AddFriendModel *contacter = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_addContacter", comment:@"手机联系人") subTitle:NSLocalizedString(@"Contacter_text_addContacterTip", comment:@"添加或邀请通讯录中的朋友") icon:@""];
+        AddFriendModel *contacter = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_addContacter", comment:@"手机联系人") subTitle:NSLocalizedString(@"Contacter_text_addContacterTip", comment:@"添加或邀请通讯录中的朋友") icon:@"me_icon_emoji"];
         [_datas addObject:contacter];
         
-        AddFriendModel *public = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_publicNumber", comment:@"公众号") subTitle:NSLocalizedString(@"Contacter_text_publicNumberTip", comment:@"获取更多资讯和服务") icon:@""];
+        AddFriendModel *public = [AddFriendModel addFriendWithTitle:NSLocalizedString(@"Contacter_text_publicNumber", comment:@"公众号") subTitle:NSLocalizedString(@"Contacter_text_publicNumberTip", comment:@"获取更多资讯和服务") icon:@"me_icon_emoji"];
         [_datas addObject:public];
     }
     
@@ -172,6 +172,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddFriendTableCell *cell = [AddFriendTableCell cellWithTableView:tableView identifier:@"addfriendcell"];
+    AddFriendModelFrame *frame = [[AddFriendModelFrame alloc] init];
+    frame.addFriendModel = self.datas[indexPath.row];
+    cell.addFriendModelFrame = frame;
     return cell;
 }
 

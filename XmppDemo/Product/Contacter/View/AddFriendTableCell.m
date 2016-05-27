@@ -8,7 +8,7 @@
 
 #import "AddFriendTableCell.h"
 #import "AddFriendView.h"
-#import "AddFriendModel.h"
+#import "AddFriendModelFrame.h"
 
 @interface AddFriendTableCell ()
 
@@ -46,10 +46,10 @@
     _addFriendView = addView;
 }
 
-- (void)setAddFriendModel:(AddFriendModel *)addFriendModel
+- (void)setAddFriendModelFrame:(AddFriendModelFrame *)addFriendModelFrame
 {
-    _addFriendModel = addFriendModel;
-    self.addFriendView.addFriendModel = addFriendModel;  //传递给view
+    _addFriendModelFrame = addFriendModelFrame;
+    self.addFriendView.addFriendModelFrame = addFriendModelFrame;  //传递给view
 }
 
 
