@@ -40,6 +40,9 @@
 //用户查询结果通知
 #define RESULT_USERNAME_SEARCH @"resultUsernameSearch"
 
+//收到添加好友请求
+#define REQUEST_ADD_FPRIEND @"request_add_friend"
+
 
 //服务器的ip地址
 #define ServerAddress @"richiequan.com"

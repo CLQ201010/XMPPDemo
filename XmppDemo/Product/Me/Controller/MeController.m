@@ -5,7 +5,6 @@
 //  Created by clq on 16/1/13.
 //  Copyright © 2016年 clq. All rights reserved.
 //
-
 #import "MeController.h"
 #import "UserInfoController.h"
 #import "PhotoController.h"
@@ -13,8 +12,6 @@
 #import "WalletController.h"
 #import "UserSettingController.h"
 #import "EmojiController.h"
-#import "GroupTableModel.h"
-#import "TableCellModel.h"
 
 @implementation MeController
 

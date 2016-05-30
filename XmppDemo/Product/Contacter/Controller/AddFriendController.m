@@ -10,6 +10,8 @@
 #import "AddFriendTableCell.h"
 #import "AddFriendModelFrame.h"
 
+#import "NormarlSearchViewController.h"
+
 @interface AddFriendController ()
 
 @property (nonatomic,strong) NSMutableArray *datas;
@@ -56,45 +58,6 @@
     }
     
     return _datas;
-}
-- (void)rightBtnClick
-{
-    [[XmppTools sharedxmpp] searchByUserName:@"1"];
-//    NSString *userName = [NSString Trim:self.myTextFiled.text];
-//    if ([userName isEqualToString:@""]) {
-//        return;
-//    }
-//    
-//    //添加好友
-//    XmppTools *xmpp = [XmppTools sharedxmpp];
-//    XMPPJID *jid = [XMPPJID jidWithUser:userName domain:ServerName resource:nil];
-//    
-//    //判断是否是自己
-//    UserOperation *user = [UserOperation shareduser];
-//    NSString *meName = user.userName;
-//    if ([meName isEqualToString:userName]) {
-//        [self showMessage:@"不能添加自己为好友"];
-//        return;
-//    }
-//    //判断好友是否已添加过
-//    if ([xmpp.rosterStorage userExistsWithJID:jid xmppStream:xmpp.xmppStream]) {
-//        [self showMessage:@"此用户已经是您的好友了！"];
-//        return;
-//    }
-//    
-//    [xmpp.roster subscribePresenceToUser:jid];
-}
-
--(void)showMessage:(NSString *)msg
-{
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Contacter_text_reminder", comment:@"温馨提示") message:msg preferredStyle:UIAlertControllerStyleAlert];
-
-    
-    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Contacter_text_OK", comment:@"好的") style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:cancleAction];
-    
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (UIView *)setupHeaderView
@@ -149,7 +112,8 @@
 // 编辑框点击事件
 - (void)editBtnClick
 {
-    
+    NormarlSearchViewController *vc = [[NormarlSearchViewController alloc] initWithPlaceHolder:NSLocalizedString(@"Contacter_text_userNameTip", @"微信号/手机号")];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)qrCodeBtnClick

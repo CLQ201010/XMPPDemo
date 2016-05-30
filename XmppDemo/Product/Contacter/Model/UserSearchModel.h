@@ -14,5 +14,7 @@
 @property (nonatomic,copy) NSString *userName; //用户名称
 @property (nonatomic,copy) NSString *nickName;  //用户昵称
 @property (nonatomic,copy) NSString *email;   //邮箱地址
+@property (nonatomic,assign) BOOL isAdded; //是否添加过了
+@property (nonatomic,assign) BOOL isOwn; //是否是自己
 
 @end

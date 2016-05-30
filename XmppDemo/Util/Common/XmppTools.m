@@ -10,9 +10,10 @@
 #import "UserOperation.h"
 #import "DDXMLDocument.h"
 #import "UserSearchModel.h"
+#import "SubscribeOperation.h"
 
 
-@interface XmppTools ()<XMPPStreamDelegate>
+@interface XmppTools ()<XMPPStreamDelegate,XMPPRosterDelegate>
 {
     //定义这个block
     XMPPResultBlock _resultBlock;
@@ -61,6 +62,7 @@ SingletonM(xmpp);
     
     //添加代理   把xmpp流放到子线程
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    [_roster addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 
 }
 #pragma mark 连接到服务器
@@ -184,7 +186,8 @@ SingletonM(xmpp);
     user.password=nil;
     user.loginStatus=NO; //退出登录状态
     
-    
+    SubscribeOperation *subscribe = [SubscribeOperation sharedSubscribe];
+    [subscribe clear];
 }
 #pragma mark 调用注册的方法
 -(void)regist:(XMPPResultBlock)xmppType
@@ -410,10 +413,53 @@ SingletonM(xmpp);
             }
         }
         
+        UserOperation *user = [UserOperation shareduser];
+        NSString *meName = user.userName;
+        if ([meName isEqualToString:userModel.userName])
+        {
+            userModel.isOwn = YES;
+        }
+        else
+        {
+            userModel.isOwn = NO;
+        }
+        
+        XmppTools *xmpp = [XmppTools sharedxmpp];
+        
+        if ([xmpp.rosterStorage userExistsWithJID:[XMPPJID jidWithUser:userModel.userName domain:ServerName resource:nil] xmppStream:xmpp.xmppStream])
+        {
+            userModel.isAdded = YES;
+        }
+        else
+        {
+            userModel.isAdded = NO;
+        }
+
         [mutableArray addObject:userModel];
     }
 
     return mutableArray;
+}
+
+#pragma mark 收到好友请求
+- (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
+{
+    SubscribeOperation *subscribe = [SubscribeOperation sharedSubscribe];
+    if([subscribe addUser:presence.from])
+    {
+        //添加好友一定会订阅对方，但是接受订阅不一定要添加对方为好友
+        [[NSNotificationCenter defaultCenter] postNotificationName:REQUEST_ADD_FPRIEND object:presence.from];
+    }
+
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
+{
+    //收到对方取消定阅我得消息
+    if ([presence.type isEqualToString:@"unsubscribe"]) {
+        //从我的本地通讯录中将他移除
+        [self.roster removeUser:presence.from];
+    }
 }
 
 //#pragma mark  当对象销毁的时候

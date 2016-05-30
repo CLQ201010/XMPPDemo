@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseGroupTableController.h"
 
-@interface DiscoverController : UIViewController
+@interface DiscoverController : BaseGroupTableController
 
 @end

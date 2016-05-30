@@ -7,9 +7,6 @@
 //
 
 #import "BaseGroupTableController.h"
-#import "GroupTableModel.h"
-#import "TableCellModel.h"
-#import "BaseTableCell.h"
 
 @interface BaseGroupTableController ()
 
