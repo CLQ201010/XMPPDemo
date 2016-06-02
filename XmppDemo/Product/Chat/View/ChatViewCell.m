@@ -52,4 +52,10 @@
     self.customView.messageFrameModel = messageFrameModel;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    frame.size.width = ScreenWidth;
+    [super setFrame:frame];
+}
+
 @end

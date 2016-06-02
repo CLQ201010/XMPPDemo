@@ -52,5 +52,10 @@
     self.addFriendView.addFriendModelFrame = addFriendModelFrame;  //传递给view
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    frame.size.width = ScreenWidth;
+    [super setFrame:frame];
+}
 
 @end

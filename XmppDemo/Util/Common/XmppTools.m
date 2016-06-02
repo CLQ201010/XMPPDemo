@@ -401,7 +401,7 @@ SingletonM(xmpp);
             }
             else if([var isEqualToString:@"jid"])
             {
-                userModel.jidStr = [filedElement stringValue];
+                userModel.jid = [XMPPJID jidWithString:[filedElement stringValue]];
             }
             else if([var isEqualToString:@"Username"])
             {

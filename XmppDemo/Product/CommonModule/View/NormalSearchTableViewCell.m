@@ -44,14 +44,20 @@
 - (void)setupUI
 {
     NormalSearchView *searchView = [[NormalSearchView alloc] initWithFrame:self.bounds];
-    self.searchView = searchView;
     [self.contentView addSubview:searchView];
+    self.searchView = searchView;
 }
 
 - (void)setUserSearchModel:(UserSearchModel *)userSearchModel
 {
     _userSearchModel = userSearchModel;
     self.searchView.userSearchModel = userSearchModel;
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    frame.size.width = ScreenWidth;
+    [super setFrame:frame];
 }
 
 @end

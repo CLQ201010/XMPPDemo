@@ -52,4 +52,10 @@
     return cell;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    frame.size.width = ScreenWidth;
+    [super setFrame:frame];
+}
+
 @end

@@ -23,7 +23,8 @@
 @property (nonatomic,strong) NSMutableArray *allKeys; //存放所有分区的键值
 @property (nonatomic,strong) NSMutableArray *friendKeys; //存放所有好友的键值
 @property (nonatomic,strong) NSMutableDictionary *dataDic; //存放分组数据
-@property (nonatomic,assign) BOOL isLoad; //好友列表在程序中开启的时候只从网上加载一次
+@property (nonatomic,strong) NSMutableArray *localKeys; //存放固定数据
+//@property (nonatomic,assign) BOOL isLoad; //好友列表在程序中开启的时候只从网上加载一次
 @property (nonatomic,strong) NSIndexPath *indexPath;//删除好友时候使用，记录即将要删除的行
 
 @end
@@ -67,6 +68,15 @@
     return _dataDic;
 }
 
+- (NSMutableArray *)localKeys
+{
+    if (_localKeys == nil) {
+        _localKeys = [NSMutableArray array];
+    }
+    
+    return _localKeys;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -94,6 +104,8 @@
 
 - (void)setupData
 {
+    [self resetData];
+    
     XmppTools *xmpp = [XmppTools sharedxmpp];
     //1.创建上下文
     NSManagedObjectContext *context = xmpp.rosterStorage.mainThreadManagedObjectContext;
@@ -116,13 +128,25 @@
     }
     
     if (self.fetchedResultController.fetchedObjects.count) {
-        self.isLoad = YES;
+        //self.isLoad = YES;
         [self devideFriend];
     }
 }
 
+- (void)resetData
+{
+    [self.dataDic removeAllObjects];
+    [self.allKeys removeAllObjects];
+    [self.friendKeys removeAllObjects];
+    
+    [self.dataDic setObject:self.localKeys forKey:@"🔍"];
+    [self.allKeys addObject:@"🔍"];
+}
+
 - (void)devideFriend
 {
+    [self resetData];
+    
     XmppTools *xmpp = [XmppTools sharedxmpp];
     for (XMPPUserCoreDataStorageObject *user in self.fetchedResultController.fetchedObjects) {
         ContacterModel *friendModel = [[ContacterModel alloc] init];
@@ -221,18 +245,17 @@
     markModel.vcClass = [MarkController class];
     
     NSArray *array = @[newFriendModel,groupChatModel,markModel];
-    [self.dataDic setObject:array forKey:@"🔍"];
-    [self.allKeys addObject:@"🔍"];
+    [self.localKeys addObjectsFromArray:array];
 }
 
 #pragma NSFetchedResultsController代理委托事件
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if (!self.isLoad) {
+  //  if (!self.isLoad) {
         //1.把好友按组分区
         [self devideFriend];
-        self.isLoad = YES;
-    }
+     //   self.isLoad = YES;
+   // }
     
     [self.tableView reloadData];
 }
