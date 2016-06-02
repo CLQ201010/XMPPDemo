@@ -38,7 +38,7 @@ SingletonM(xmpp);
 -(void)setupXmppStream
 {
     _xmppStream=[[XMPPStream alloc]init];
-#warning 每一个模块添加都要激活
+//#warning 每一个模块添加都要激活
     //1.添加自动连接模块
     _reconnect=[[XMPPReconnect alloc]init];
     [_reconnect activate:_xmppStream];

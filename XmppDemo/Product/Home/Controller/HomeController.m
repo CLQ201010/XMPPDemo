@@ -296,15 +296,9 @@
         
         //删除该好友所有聊天数据
         [FmbdMessage deleteChatData:[NSString stringWithFormat:@"%@@%@",userName,ServerName]];
-        //花名册上移除该好友
-        XmppTools *xmpp = [XmppTools sharedxmpp];
-        [xmpp.roster removeUser:homeModel.jid];
         //更新界面
         [self.chatData removeObjectAtIndex:indexPath.row];
         [self.tableView reloadData];
-        
-        //更新本地库中的好友数据
-        [FmdbTool deleteWithName:userName];
     }
 }
 //滚动视图时停止编辑

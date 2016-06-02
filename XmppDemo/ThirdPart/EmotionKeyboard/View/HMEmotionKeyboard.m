@@ -79,6 +79,8 @@
         case HMEmotionTypeRecent: // 最近
             self.listView.emotions = [HMEmotionTool recentEmotions];
             break;
+        case HMEmotionTypeSend:
+            break;
     }
 }
 @end

@@ -345,8 +345,6 @@
         else {
            [self.navigationController pushViewController:[[contacterModel.vcClass alloc] init] animated:YES];
         }
-        
-
     }
 }
 //滑动删除单元格

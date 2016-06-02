@@ -97,7 +97,6 @@
 		23F71EEA1C4A377400468BC4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F71EE91C4A377400468BC4 /* libsqlite3.dylib */; };
 		23F71EEE1C4A37ED00468BC4 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F71EED1C4A37ED00468BC4 /* libicucore.A.dylib */; };
 		23F71EF71C4B884B00468BC4 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F71EF61C4B884B00468BC4 /* NSString+Util.m */; };
-		23F879BD1CFE73CE00D36544 /* GenericUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F879BC1CFE73CE00D36544 /* GenericUtil.m */; };
 		23FAE1A91C5221210019018E /* MySearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE1A81C5221210019018E /* MySearchView.m */; };
 		23FAE1EE1C5251CD0019018E /* ContacterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE1ED1C5251CD0019018E /* ContacterModel.m */; };
 		23FAE1F11C5251F80019018E /* ContacterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE1F01C5251F80019018E /* ContacterView.m */; };
@@ -309,8 +308,6 @@
 		23F71EED1C4A37ED00468BC4 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = /usr/lib/libicucore.A.dylib; sourceTree = "<absolute>"; };
 		23F71EF51C4B884B00468BC4 /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		23F71EF61C4B884B00468BC4 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
-		23F879BB1CFE73CE00D36544 /* GenericUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericUtil.h; sourceTree = "<group>"; };
-		23F879BC1CFE73CE00D36544 /* GenericUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericUtil.m; sourceTree = "<group>"; };
 		23FAE1A71C5221210019018E /* MySearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySearchView.h; sourceTree = "<group>"; };
 		23FAE1A81C5221210019018E /* MySearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySearchView.m; sourceTree = "<group>"; };
 		23FAE1EC1C5251CD0019018E /* ContacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContacterModel.h; sourceTree = "<group>"; };
@@ -1228,8 +1225,6 @@
 				23F71CAB1C47C6B500468BC4 /* UserOperation.m */,
 				235EEACA1CFC3A9A00CF9E4F /* SubscribeOperation.h */,
 				235EEACB1CFC3A9A00CF9E4F /* SubscribeOperation.m */,
-				23F879BB1CFE73CE00D36544 /* GenericUtil.h */,
-				23F879BC1CFE73CE00D36544 /* GenericUtil.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1558,7 +1553,6 @@
 				23F71C8E1C47BD7300468BC4 /* CustomTabView.m in Sources */,
 				235EEAC91CFC0E8A00CF9E4F /* NewFriendModelFrame.m in Sources */,
 				230B3F1A1C5A42F2009274D7 /* HMEmotionKeyboard.m in Sources */,
-				23F879BD1CFE73CE00D36544 /* GenericUtil.m in Sources */,
 				234F38AD1C4E0DCC00562779 /* CollectController.m in Sources */,
 				23018E5B1C4FA424001511E1 /* SettingViewCell.m in Sources */,
 				23FAE1EE1C5251CD0019018E /* ContacterModel.m in Sources */,
