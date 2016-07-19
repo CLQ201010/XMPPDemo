@@ -445,7 +445,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ChatViewCell *cell = [ChatViewCell cellWithTableView:tableView identifier:@"chatviewcell    "];
+    ChatViewCell *cell = [ChatViewCell cellWithTableView:tableView identifier:@"chatviewcell"];
     cell.messageFrameModel = self.frameModelArr[indexPath.row];
     
     return cell;

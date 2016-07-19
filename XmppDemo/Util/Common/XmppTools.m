@@ -455,10 +455,14 @@ SingletonM(xmpp);
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
+    //unavailable需要处理，当用户不在线的时候，不要影响通讯录个数，只可以显示是否在线
+    
     //收到对方取消定阅我得消息
     if ([presence.type isEqualToString:@"unsubscribe"]) {
         //从我的本地通讯录中将他移除
         [self.roster removeUser:presence.from];
+    } else if ([presence.type isEqualToString:@"subscribed"]) {
+        //通知通讯录发生变化
     }
 }
 

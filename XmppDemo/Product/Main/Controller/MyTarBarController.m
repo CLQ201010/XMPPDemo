@@ -8,20 +8,11 @@
 
 #import "MyTarBarController.h"
 #import "MyNavController.h"
-#import "HomeController.h"
-#import "ContacterController.h"
-#import "DiscoverController.h"
-#import "MeController.h"
 #import "CustomTabView.h"
 
 @interface MyTarBarController ()<CustomTabViewDelegate>
 
 @property (nonatomic,weak) CustomTabView *customTbabar;
-
-@property (nonatomic,strong) HomeController *home;
-@property (nonatomic,strong) ContacterController *contacter;
-@property (nonatomic,strong) DiscoverController *discover;
-@property (nonatomic,strong) MeController *me;
 
 @end
 

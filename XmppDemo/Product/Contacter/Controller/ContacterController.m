@@ -15,6 +15,7 @@
 #import "MarkController.h"
 #import "MySearchView.h"
 #import "ChatController.h"
+#import "MyTarBarController.h"
 
 @interface ContacterController ()<NSFetchedResultsControllerDelegate,XMPPRosterDelegate>
 
@@ -340,7 +341,10 @@
             }
            
             chatVC.jid = contacterModel.jid;
-            [self.navigationController pushViewController:chatVC animated:YES];
+
+            MyTarBarController *vc = (MyTarBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+            vc.selectedIndex = 0;
+            [vc.home.navigationController pushViewController:chatVC animated:YES];
         }
         else {
            [self.navigationController pushViewController:[[contacterModel.vcClass alloc] init] animated:YES];

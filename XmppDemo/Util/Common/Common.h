@@ -43,6 +43,8 @@
 //收到添加好友请求
 #define REQUEST_ADD_FPRIEND @"request_add_friend"
 
+#define REQUEST_ACCEPT_FRRIEND @"request_accept_friend"
+
 
 //服务器的ip地址
 #define ServerAddress @"richiequan.com"
