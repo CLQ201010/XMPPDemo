@@ -441,6 +441,26 @@ SingletonM(xmpp);
     return mutableArray;
 }
 
+- (void)xmppRosterDidBeginPopulating:(XMPPRoster *)sender withVersion:(NSString *)version
+{
+    NSLog(@"XmppTools 开始检索好友列表");
+}
+
+
+- (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
+{
+    
+     NSLog(@"XmppTools 好友列表检索完毕");
+}
+
+
+- (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
+{
+    NSString* jidStr = [[item attributeForName:@"jid"] stringValue];
+    NSLog(@"XmppTools 好友为,jidStr=%@",jidStr);
+   
+}
+
 #pragma mark 收到好友请求
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
 {
@@ -456,6 +476,8 @@ SingletonM(xmpp);
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
     //unavailable需要处理，当用户不在线的时候，不要影响通讯录个数，只可以显示是否在线
+    if ([presence.type isEqualToString:@"unsubscribe"]) {
+    }
     
     //收到对方取消定阅我得消息
     if ([presence.type isEqualToString:@"unsubscribe"]) {

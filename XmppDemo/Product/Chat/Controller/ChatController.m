@@ -107,6 +107,7 @@
         CGFloat tableH = self.view.height - 64 - BOTTOMVIEW_HEIGHT;
         self.tableViewHeight = tableH;
         tableView.frame = CGRectMake(0, 0, ScreenWidth, tableH);
+        tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
         [self.view addSubview:tableView];
         self.tableView = tableView;
     }

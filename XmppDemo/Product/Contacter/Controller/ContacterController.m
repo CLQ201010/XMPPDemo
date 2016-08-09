@@ -150,6 +150,11 @@
     
     XmppTools *xmpp = [XmppTools sharedxmpp];
     for (XMPPUserCoreDataStorageObject *user in self.fetchedResultController.fetchedObjects) {
+        
+       // 好友在线状态,0:在线; 1:离开; 2:离线
+       // user.sectionNum
+        
+        
         ContacterModel *friendModel = [[ContacterModel alloc] init];
         friendModel.jid = user.jid;
         friendModel.jidStr = [NSString cutXmppPre:user.jidStr];
@@ -250,15 +255,19 @@
 }
 
 #pragma NSFetchedResultsController代理委托事件
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self devideFriend];
+//        [self.tableView reloadData];
+//    });
+//    //1.把好友按组分区
+//
+//}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-  //  if (!self.isLoad) {
-        //1.把好友按组分区
-        [self devideFriend];
-     //   self.isLoad = YES;
-   // }
     
-    [self.tableView reloadData];
 }
 
 #pragma mark 点击事件
