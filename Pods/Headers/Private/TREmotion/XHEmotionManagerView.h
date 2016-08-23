@@ -1,0 +1,1 @@
+../../../TREmotion/Classes/Emotion/XHEmotionManagerView.h
