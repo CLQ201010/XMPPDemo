@@ -11,6 +11,7 @@
 #import "HomeViewCell.h"
 #import "HomeModel.h"
 #import "ChatController.h"
+#import "ContacterModel.h"
 
 @interface HomeController ()<MySearchViewDelegate>
 
@@ -268,8 +269,13 @@
     else {
         chatVC.title = homeModel.username;
     }
-   
-    chatVC.jid = homeModel.jid;
+    
+    XmppTools *xmpp = [XmppTools sharedxmpp];
+    XMPPUserCoreDataStorageObject *userCodeData = [xmpp.rosterStorage userForJID:homeModel.jid xmppStream:xmpp.xmppStream managedObjectContext:xmpp.rosterStorage.mainThreadManagedObjectContext];
+    
+    ContacterModel *contacterModel = [[ContacterModel alloc] initWithUserCoreData:userCodeData];
+
+    chatVC.contacterModel = contacterModel;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 //滑动删除单元格

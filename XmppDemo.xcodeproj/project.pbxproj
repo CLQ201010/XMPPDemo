@@ -60,7 +60,6 @@
 		235EEAC21CFC0DB200CF9E4F /* NewFriendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 235EEAC11CFC0DB200CF9E4F /* NewFriendView.m */; };
 		235EEAC61CFC0E3C00CF9E4F /* NewFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 235EEAC51CFC0E3C00CF9E4F /* NewFriendModel.m */; };
 		235EEAC91CFC0E8A00CF9E4F /* NewFriendModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 235EEAC81CFC0E8A00CF9E4F /* NewFriendModelFrame.m */; };
-		235EEACC1CFC3A9A00CF9E4F /* SubscribeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 235EEACB1CFC3A9A00CF9E4F /* SubscribeOperation.m */; };
 		2370A26E1C98076300985E48 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2370A26C1C98076300985E48 /* Localizable.strings */; };
 		23B5A2691CEAEE0F00490CCB /* AddFriendModelFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B5A2681CEAEE0F00490CCB /* AddFriendModelFrame.m */; };
 		23C6A1791C44B90E00DAD20D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C6A1781C44B90E00DAD20D /* main.m */; };
@@ -108,6 +107,8 @@
 		23FAE20B1C53A25B0019018E /* AddFriendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE20A1C53A25B0019018E /* AddFriendView.m */; };
 		23FAE20E1C53A27F0019018E /* AddFriendTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE20D1C53A27F0019018E /* AddFriendTableCell.m */; };
 		23FAE2111C53A33D0019018E /* MyTextFiled.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FAE2101C53A33D0019018E /* MyTextFiled.m */; };
+		38CBB8CC1D83F8D100F51CBB /* ContacterOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB8CB1D83F8D100F51CBB /* ContacterOperation.m */; };
+		38CBB8CF1D83F92600F51CBB /* SubscribeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB8CE1D83F92600F51CBB /* SubscribeOperation.m */; };
 		959484F0B9AE403EE7097537 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABA4B7AAF65A0E10DE927A6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -233,8 +234,6 @@
 		235EEAC51CFC0E3C00CF9E4F /* NewFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendModel.m; sourceTree = "<group>"; };
 		235EEAC71CFC0E8A00CF9E4F /* NewFriendModelFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendModelFrame.h; sourceTree = "<group>"; };
 		235EEAC81CFC0E8A00CF9E4F /* NewFriendModelFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendModelFrame.m; sourceTree = "<group>"; };
-		235EEACA1CFC3A9A00CF9E4F /* SubscribeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeOperation.h; sourceTree = "<group>"; };
-		235EEACB1CFC3A9A00CF9E4F /* SubscribeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeOperation.m; sourceTree = "<group>"; };
 		2370A26D1C98076300985E48 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2370A26F1C9808BC00985E48 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		23B5A2671CEAEE0F00490CCB /* AddFriendModelFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendModelFrame.h; sourceTree = "<group>"; };
@@ -330,6 +329,10 @@
 		23FAE20D1C53A27F0019018E /* AddFriendTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendTableCell.m; sourceTree = "<group>"; };
 		23FAE20F1C53A33D0019018E /* MyTextFiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextFiled.h; sourceTree = "<group>"; };
 		23FAE2101C53A33D0019018E /* MyTextFiled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextFiled.m; sourceTree = "<group>"; };
+		38CBB8CA1D83F8D100F51CBB /* ContacterOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContacterOperation.h; sourceTree = "<group>"; };
+		38CBB8CB1D83F8D100F51CBB /* ContacterOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContacterOperation.m; sourceTree = "<group>"; };
+		38CBB8CD1D83F92600F51CBB /* SubscribeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeOperation.h; sourceTree = "<group>"; };
+		38CBB8CE1D83F92600F51CBB /* SubscribeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeOperation.m; sourceTree = "<group>"; };
 		3ABA4B7AAF65A0E10DE927A6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA7C45852E88BE6DAD7F5CD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B73807BDDE6B472370735F05 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1026,6 +1029,10 @@
 				23B5A2661CEAEDC100490CCB /* 添加好友 */,
 				23FAE1EC1C5251CD0019018E /* ContacterModel.h */,
 				23FAE1ED1C5251CD0019018E /* ContacterModel.m */,
+				38CBB8CA1D83F8D100F51CBB /* ContacterOperation.h */,
+				38CBB8CB1D83F8D100F51CBB /* ContacterOperation.m */,
+				38CBB8CD1D83F92600F51CBB /* SubscribeOperation.h */,
+				38CBB8CE1D83F92600F51CBB /* SubscribeOperation.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1223,8 +1230,6 @@
 				23F71CA91C47C6B500468BC4 /* Singleton.h */,
 				23F71CAA1C47C6B500468BC4 /* UserOperation.h */,
 				23F71CAB1C47C6B500468BC4 /* UserOperation.m */,
-				235EEACA1CFC3A9A00CF9E4F /* SubscribeOperation.h */,
-				235EEACB1CFC3A9A00CF9E4F /* SubscribeOperation.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1503,6 +1508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23F71CC01C4A30D000468BC4 /* XmppTools.m in Sources */,
+				38CBB8CF1D83F92600F51CBB /* SubscribeOperation.m in Sources */,
 				235EEA9D1CF7EA2700CF9E4F /* PictureViewController.m in Sources */,
 				230B3EE61C5A3C75009274D7 /* MessageModel.m in Sources */,
 				23FAE1FA1C5364B80019018E /* NewFriendController.m in Sources */,
@@ -1540,7 +1546,6 @@
 				235EEAA01CF7EA3400CF9E4F /* MusicViewController.m in Sources */,
 				230B3EEF1C5A3CFF009274D7 /* ChatBottomView.m in Sources */,
 				235EEAAA1CF7EA7A00CF9E4F /* WeatherViewController.m in Sources */,
-				235EEACC1CFC3A9A00CF9E4F /* SubscribeOperation.m in Sources */,
 				23F71CA51C47C66F00468BC4 /* UIImage+CH.m in Sources */,
 				230B3F181C5A42F2009274D7 /* HMRegexResult.m in Sources */,
 				234F38931C4D091A00562779 /* EmojiController.m in Sources */,
@@ -1557,6 +1562,7 @@
 				23018E5B1C4FA424001511E1 /* SettingViewCell.m in Sources */,
 				23FAE1EE1C5251CD0019018E /* ContacterModel.m in Sources */,
 				234F38AA1C4DDAAE00562779 /* BaseView.m in Sources */,
+				38CBB8CC1D83F8D100F51CBB /* ContacterOperation.m in Sources */,
 				23F71CB41C4A2D4800468BC4 /* RegisterController.m in Sources */,
 				230B3F1F1C5A42F2009274D7 /* HMEmotionView.m in Sources */,
 				235EEAA31CF7EA4700CF9E4F /* VideoViewController.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "ContacterTableCell.h"
-#import "ContacterModel.h"
 #import "ContacterView.h"
 
 @interface ContacterTableCell ()
@@ -48,7 +47,7 @@
 - (void)setContacterModel:(ContacterModel *)contacterModel
 {
     _contacterModel = contacterModel;
-    self.contacterView.contacterModel = contacterModel;
+    _contacterView.contacterModel = contacterModel;
 }
 
 - (void)setFrame:(CGRect)frame

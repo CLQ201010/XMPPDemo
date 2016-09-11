@@ -16,6 +16,7 @@
 #import "HMEmotionTool.h"
 #import "MessageFrameModel.h"
 #import "MessageModel.h"
+#import "ContacterModel.h"
 
 
 @interface ChatController ()<ChatBottomViewDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,UITextViewDelegate>
@@ -156,6 +157,11 @@
     [self.view endEditing:YES];
 }
 
+- (void)setContacterModel:(ContacterModel *)contacterModel
+{
+    _contacterModel = contacterModel;
+}
+
 //加载聊天数据
 - (void)setupData
 {
@@ -170,7 +176,7 @@
     //2.创建请求对象
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
     //3.设置过滤条件
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"streamBareJidStr = %@ and bareJidStr = %@",myJid,self.jid.bare];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"streamBareJidStr = %@ and bareJidStr = %@",myJid,_contacterModel.jid.bare];
     fetchRequest.predicate = predicate;
     //4.排序
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
@@ -386,7 +392,7 @@
 }
 //发送聊天消息
 - (void)sendMsgWithText:(NSString *)text bodyType:(NSString *)bodyType {
-    XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:self.jid];
+    XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:_contacterModel.jid];
     
     XmppTools *xmpp = [XmppTools sharedxmpp];
     [msg addAttributeWithName:@"bodyType" stringValue:bodyType];

@@ -11,6 +11,7 @@
 #import "DDXMLDocument.h"
 #import "UserSearchModel.h"
 #import "SubscribeOperation.h"
+#import "ContacterOperation.h"
 
 
 @interface XmppTools ()<XMPPStreamDelegate,XMPPRosterDelegate>
@@ -444,20 +445,20 @@ SingletonM(xmpp);
 - (void)xmppRosterDidBeginPopulating:(XMPPRoster *)sender withVersion:(NSString *)version
 {
     NSLog(@"XmppTools 开始检索好友列表");
+    [[ContacterOperation sharedcontacter] clear];
 }
 
 
 - (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
 {
-    
      NSLog(@"XmppTools 好友列表检索完毕");
+    [[NSNotificationCenter defaultCenter] postNotificationName:FRIEND_POPULATED object:nil];
 }
 
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
 {
-    NSString* jidStr = [[item attributeForName:@"jid"] stringValue];
-    NSLog(@"XmppTools 好友为,jidStr=%@",jidStr);
+    [[ContacterOperation sharedcontacter] addItem:item];
    
 }
 

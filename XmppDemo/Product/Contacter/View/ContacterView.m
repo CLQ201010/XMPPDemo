@@ -57,14 +57,13 @@
 - (void)setContacterModel:(ContacterModel *)contacterModel
 {
     _contacterModel = contacterModel;
-    self.headImgView.image = contacterModel.headIcon ? contacterModel.headIcon : [UIImage imageNamed:@"common_defaultProfile"];
-    if (contacterModel.nicname == nil) {
-        self.userNameLbl.text = contacterModel.jidStr;
+    self.headImgView.image = contacterModel.photo ? contacterModel.photo : [UIImage imageNamed:@"common_defaultProfile"];
+    if (contacterModel.nickname == nil) {
+        self.userNameLbl.text = contacterModel.name;
     }
     else {
-        self.userNameLbl.text = contacterModel.nicname;
+        self.userNameLbl.text = contacterModel.nickname;
     }
-    
 }
 
 @end

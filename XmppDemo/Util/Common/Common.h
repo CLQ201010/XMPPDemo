@@ -42,8 +42,10 @@
 
 //收到添加好友请求
 #define REQUEST_ADD_FPRIEND @"request_add_friend"
-
+//同意好友请求
 #define REQUEST_ACCEPT_FRRIEND @"request_accept_friend"
+//好友列表获取完成通知
+#define FRIEND_POPULATED @"friend_populated"
 
 
 //服务器的ip地址

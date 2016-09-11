@@ -17,7 +17,7 @@
 #import "ChatController.h"
 #import "MyTarBarController.h"
 
-@interface ContacterController ()<NSFetchedResultsControllerDelegate,XMPPRosterDelegate>
+@interface ContacterController ()<XMPPRosterDelegate>
 
 @property (nonatomic,strong) NSFetchedResultsController *fetchedResultController;
 
@@ -25,8 +25,11 @@
 @property (nonatomic,strong) NSMutableArray *friendKeys; //存放所有好友的键值
 @property (nonatomic,strong) NSMutableDictionary *dataDic; //存放分组数据
 @property (nonatomic,strong) NSMutableArray *localKeys; //存放固定数据
-//@property (nonatomic,assign) BOOL isLoad; //好友列表在程序中开启的时候只从网上加载一次
+@property (nonatomic,strong) NSMutableArray *datas; //存放好友的jids
+
 @property (nonatomic,strong) NSIndexPath *indexPath;//删除好友时候使用，记录即将要删除的行
+
+
 
 @end
 
@@ -36,46 +39,14 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        
+        _allKeys = [NSMutableArray array];
+        _friendKeys = [NSMutableArray array];
+        _dataDic = [NSMutableDictionary dictionary];
+        _localKeys = [NSMutableArray array];
+        _datas = [NSMutableArray array];
     }
     
     return self;
-}
-
-- (NSMutableArray *)allKeys
-{
-    if (_allKeys == nil) {
-        _allKeys = [NSMutableArray array];
-    }
-    
-    return _allKeys;
-}
-
-- (NSMutableArray *)friendKeys
-{
-    if (_friendKeys == nil) {
-        _friendKeys = [NSMutableArray array];
-    }
-    
-    return _friendKeys;
-}
-
-- (NSMutableDictionary *)dataDic
-{
-    if (_dataDic == nil) {
-        _dataDic = [NSMutableDictionary dictionary];
-    }
-    
-    return _dataDic;
-}
-
-- (NSMutableArray *)localKeys
-{
-    if (_localKeys == nil) {
-        _localKeys = [NSMutableArray array];
-    }
-    
-    return _localKeys;
 }
 
 - (void)viewDidLoad
@@ -108,88 +79,59 @@
     [self resetData];
     
     XmppTools *xmpp = [XmppTools sharedxmpp];
-    //1.创建上下文
-    NSManagedObjectContext *context = xmpp.rosterStorage.mainThreadManagedObjectContext;
-    //2.创建Fetch请求
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPUserCoreDataStorageObject"];
-    //3.筛选本用户的好友
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"streamBareJidStr =%@",xmpp.jid];
-    fetchRequest.predicate = predicate;
-    //4.按显示名称身升序
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
-    fetchRequest.sortDescriptors = @[sort];
-    //5.执行查询获取好友列表
-    self.fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    self.fetchedResultController.delegate = self;
     
-    NSError *error = nil;
-    [self.fetchedResultController performFetch:&error];
-    if (error != nil) {
-        NSLog(@"获取好友列表出现错误，错误描述为%@",[error localizedDescription]);
-    }
+    NSArray *jids = [xmpp.rosterStorage jidsForXMPPStream:xmpp.xmppStream];
+    _datas = [[NSMutableArray alloc] initWithArray:jids];
     
-    if (self.fetchedResultController.fetchedObjects.count) {
-        //self.isLoad = YES;
-        [self devideFriend];
-    }
+    [self devideFriend];
 }
 
 - (void)resetData
 {
-    [self.dataDic removeAllObjects];
-    [self.allKeys removeAllObjects];
-    [self.friendKeys removeAllObjects];
+    [_dataDic removeAllObjects];
+    [_allKeys removeAllObjects];
+    [_friendKeys removeAllObjects];
     
-    [self.dataDic setObject:self.localKeys forKey:@"🔍"];
-    [self.allKeys addObject:@"🔍"];
+    [_dataDic setObject:self.localKeys forKey:@"🔍"];
+    [_allKeys addObject:@"🔍"];
 }
 
 - (void)devideFriend
 {
-    [self resetData];
-    
     XmppTools *xmpp = [XmppTools sharedxmpp];
-    for (XMPPUserCoreDataStorageObject *user in self.fetchedResultController.fetchedObjects) {
+ 
+    for (XMPPJID *jid in _datas) {
+        XMPPUserCoreDataStorageObject *user = [xmpp.rosterStorage userForJID:jid xmppStream:xmpp.xmppStream managedObjectContext:xmpp.rosterStorage.mainThreadManagedObjectContext];
         
-       // 好友在线状态,0:在线; 1:离开; 2:离线
-       // user.sectionNum
-        
-        
-        ContacterModel *friendModel = [[ContacterModel alloc] init];
-        friendModel.jid = user.jid;
-        friendModel.jidStr = [NSString cutXmppPre:user.jidStr];
-        //获取好友头像
-        if (user.photo != nil) {
-            friendModel.headIcon = user.photo;
-        }
-        else {
-            friendModel.headIcon = [UIImage imageWithData:[xmpp.avatar photoDataForJID:user.jid]];
-        }
-        friendModel.nicname = user.nickname;
-        friendModel.vcClass = [ChatController class];
+        NSString *pinyin;
         if (user.nickname == nil) {
-             friendModel.pinyin = [NSString hanziToPinyin:user.jidStr];
+            pinyin = [NSString hanziToPinyin:user.jidStr];
         }
         else {
-             friendModel.pinyin = [NSString hanziToPinyin:user.nickname];
+            pinyin = [NSString hanziToPinyin:user.nickname];
         }
         //获取首字母
-        NSString *firstLetter = [friendModel.pinyin substringToIndex:1];
+        NSString *firstLetter = [pinyin substringToIndex:1];
         firstLetter = [firstLetter uppercaseString];//转为大写
+        
+        ContacterModel *contacterModel = [[ContacterModel alloc] initWithUserCoreData:user];
+        contacterModel.pinyin = pinyin;
+        contacterModel.vcClass = [ChatController class];
         
         //根据key值获取对应的数组
         NSArray *array = [self.dataDic objectForKey:firstLetter];
         NSMutableArray *contacterArray;
         if (array == nil) {
-            contacterArray = [NSMutableArray arrayWithObject:friendModel];
+            contacterArray = [NSMutableArray arrayWithObject:contacterModel];
         }
         else {
             contacterArray = [NSMutableArray arrayWithArray:array];
-            [contacterArray addObject:friendModel];
+            [contacterArray addObject:contacterModel];
         }
         [self.dataDic setObject:contacterArray forKey:firstLetter];
     }
     
+
     //获取好友所有key值
     NSArray *keys = [self.dataDic allKeys];
     for (NSString *key in keys) {
@@ -202,9 +144,17 @@
     [self.allKeys addObjectsFromArray:sortKeys];
 }
 
+- (void)rosterChanged
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setupData];
+        [self.tableView reloadData];
+    });
+}
+
 - (void)addNotification
 {
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rosterChanged) name:FRIEND_POPULATED object:nil];
 }
 
 - (void)removeNotification
@@ -236,39 +186,24 @@
 {
     //1.新的朋友
     ContacterModel *newFriendModel = [[ContacterModel alloc] init];
-    newFriendModel.nicname = NSLocalizedString(@"Contacter_text_newFriend", comment:@"新的朋友");
-    newFriendModel.headIcon = [UIImage imageNamed:@"contacter_icon_newfriend"];
-    newFriendModel.vcClass = [NewFriendController class];
+    newFriendModel.nickname = NSLocalizedString(@"Contacter_text_newFriend", comment:@"新的朋友");
+    newFriendModel.photo = [UIImage imageNamed:@"contacter_icon_newfriend"];
+    [newFriendModel setValue:NSLocalizedString(@"Contacter_text_newFriend", comment:@"新的朋友") forKey:@"nickname"];
+    
     //2.群聊
     ContacterModel *groupChatModel = [[ContacterModel alloc] init];
-    groupChatModel.nicname = NSLocalizedString(@"Contacter_text_groupChat", comment:@"群聊");
-    groupChatModel.headIcon = [UIImage imageNamed:@"contacter_icon_groupchat"];
-    groupChatModel.vcClass = [GroupChatController class];
+    groupChatModel.nickname = NSLocalizedString(@"Contacter_text_groupChat", comment:@"群聊");
+    groupChatModel.photo = [UIImage imageNamed:@"contacter_icon_groupchat"];
+
     //3.标签
     ContacterModel *markModel = [[ContacterModel alloc] init];
-    markModel.nicname = NSLocalizedString(@"Contacter_text_mark", comment:@"标签");
-    markModel.headIcon = [UIImage imageNamed:@"contacter_icon_mark"];
-    markModel.vcClass = [MarkController class];
+    markModel.nickname = NSLocalizedString(@"Contacter_text_mark", comment:@"标签");
+    markModel.photo = [UIImage imageNamed:@"contacter_icon_mark"];
     
     NSArray *array = @[newFriendModel,groupChatModel,markModel];
-    [self.localKeys addObjectsFromArray:array];
+    [_localKeys addObjectsFromArray:array];
 }
 
-#pragma NSFetchedResultsController代理委托事件
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self devideFriend];
-//        [self.tableView reloadData];
-//    });
-//    //1.把好友按组分区
-//
-//}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    
-}
 
 #pragma mark 点击事件
 //导航栏右侧按钮点击事件
@@ -342,21 +277,15 @@
     if (contacterModel.vcClass != nil) {
         if ([contacterModel.vcClass isSubclassOfClass:[ChatController class]]) {
             ChatController *chatVC = [[ChatController alloc] init];
-            if (contacterModel.nicname != nil) {
-                chatVC.title = contacterModel.nicname;  //用户的昵称
-            }
-            else {
-                chatVC.title = contacterModel.jidStr;
-            }
-           
-            chatVC.jid = contacterModel.jid;
-
+            
+            chatVC.contacterModel = contacterModel;
+            
             MyTarBarController *vc = (MyTarBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
             vc.selectedIndex = 0;
             [vc.home.navigationController pushViewController:chatVC animated:YES];
         }
         else {
-           [self.navigationController pushViewController:[[contacterModel.vcClass alloc] init] animated:YES];
+            [self.navigationController pushViewController:[[contacterModel.vcClass alloc] init] animated:YES];
         }
     }
 }
@@ -404,8 +333,8 @@
 {
     NSString *key = self.allKeys[self.indexPath.section];
     NSMutableArray *array = [self.dataDic objectForKey:key];
-    ContacterModel *friendModel = array[self.indexPath.row];
-    NSString *uname = friendModel.jidStr;
+    XMPPUserCoreDataStorageObject *user = array[self.indexPath.row];
+    NSString *uname = user.jidStr;
     
     //分组只有一个好友时候，删除分组
     if (array.count <= 1) {
@@ -415,7 +344,7 @@
     
     //花名册上移除该好友
     XmppTools *xmpp = [XmppTools sharedxmpp];
-    [xmpp.roster removeUser:friendModel.jid];
+    [xmpp.roster removeUser:user.jid];
     
     //清楚首页对该还有的监听
     NSNotification *notification = [[NSNotification alloc] initWithName:DeleteFriend object:uname userInfo:nil];

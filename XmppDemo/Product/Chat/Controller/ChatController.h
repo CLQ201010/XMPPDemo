@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ContacterModel;
 
 @interface ChatController : UIViewController
 
-@property (nonatomic,strong) XMPPJID *jid;
+@property (nonatomic,strong) ContacterModel *contacterModel;
 @property (nonatomic,weak) UIImage *photoImg;
 
 @end
