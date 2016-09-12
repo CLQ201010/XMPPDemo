@@ -46,6 +46,8 @@
 #define REQUEST_ACCEPT_FRRIEND @"request_accept_friend"
 //好友列表获取完成通知
 #define FRIEND_POPULATED @"friend_populated"
+//好友列表发生变化
+#define FRIEND_CHANGED @"friend_changed"
 
 
 //服务器的ip地址

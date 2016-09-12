@@ -89,7 +89,7 @@
     //同意并添加对方为好友
     [xmpp.roster acceptPresenceSubscriptionRequestFrom:_friendModelFrame.friendModel.jid andAddToRoster:YES];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:REQUEST_ACCEPT_FRRIEND object:_friendModelFrame];
+    [[NSNotificationCenter defaultCenter] postNotificationName:FRIEND_CHANGED object:_friendModelFrame];
 }
 
 - (void)setFriendModelFrame:(NewFriendModelFrame *)friendModelFrame

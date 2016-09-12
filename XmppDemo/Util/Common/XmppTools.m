@@ -445,7 +445,6 @@ SingletonM(xmpp);
 - (void)xmppRosterDidBeginPopulating:(XMPPRoster *)sender withVersion:(NSString *)version
 {
     NSLog(@"XmppTools 开始检索好友列表");
-    [[ContacterOperation sharedcontacter] clear];
 }
 
 
@@ -458,8 +457,7 @@ SingletonM(xmpp);
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
 {
-    [[ContacterOperation sharedcontacter] addItem:item];
-   
+  //  NSString *var = [item attributeStringValueForName:@"ask"];
 }
 
 #pragma mark 收到好友请求
@@ -484,8 +482,10 @@ SingletonM(xmpp);
     if ([presence.type isEqualToString:@"unsubscribe"]) {
         //从我的本地通讯录中将他移除
         [self.roster removeUser:presence.from];
+        [[NSNotificationCenter defaultCenter] postNotificationName:FRIEND_CHANGED object:nil];
     } else if ([presence.type isEqualToString:@"subscribed"]) {
         //通知通讯录发生变化
+        [[NSNotificationCenter defaultCenter] postNotificationName:FRIEND_CHANGED object:nil];
     }
 }
 

@@ -155,6 +155,7 @@
 - (void)addNotification
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rosterChanged) name:FRIEND_POPULATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rosterChanged) name:FRIEND_CHANGED object:nil];
 }
 
 - (void)removeNotification
@@ -188,17 +189,19 @@
     ContacterModel *newFriendModel = [[ContacterModel alloc] init];
     newFriendModel.nickname = NSLocalizedString(@"Contacter_text_newFriend", comment:@"新的朋友");
     newFriendModel.photo = [UIImage imageNamed:@"contacter_icon_newfriend"];
-    [newFriendModel setValue:NSLocalizedString(@"Contacter_text_newFriend", comment:@"新的朋友") forKey:@"nickname"];
+    newFriendModel.vcClass = [NewFriendController class];
     
     //2.群聊
     ContacterModel *groupChatModel = [[ContacterModel alloc] init];
     groupChatModel.nickname = NSLocalizedString(@"Contacter_text_groupChat", comment:@"群聊");
     groupChatModel.photo = [UIImage imageNamed:@"contacter_icon_groupchat"];
+    groupChatModel.vcClass = [GroupChatController class];
 
     //3.标签
     ContacterModel *markModel = [[ContacterModel alloc] init];
     markModel.nickname = NSLocalizedString(@"Contacter_text_mark", comment:@"标签");
     markModel.photo = [UIImage imageNamed:@"contacter_icon_mark"];
+    markModel.vcClass = [MarkController class];
     
     NSArray *array = @[newFriendModel,groupChatModel,markModel];
     [_localKeys addObjectsFromArray:array];
@@ -333,8 +336,8 @@
 {
     NSString *key = self.allKeys[self.indexPath.section];
     NSMutableArray *array = [self.dataDic objectForKey:key];
-    XMPPUserCoreDataStorageObject *user = array[self.indexPath.row];
-    NSString *uname = user.jidStr;
+    ContacterModel *contacterModel = array[self.indexPath.row];
+    NSString *uname = contacterModel.name;
     
     //分组只有一个好友时候，删除分组
     if (array.count <= 1) {
@@ -344,7 +347,7 @@
     
     //花名册上移除该好友
     XmppTools *xmpp = [XmppTools sharedxmpp];
-    [xmpp.roster removeUser:user.jid];
+    [xmpp.roster removeUser:contacterModel.jid];
     
     //清楚首页对该还有的监听
     NSNotification *notification = [[NSNotification alloc] initWithName:DeleteFriend object:uname userInfo:nil];
