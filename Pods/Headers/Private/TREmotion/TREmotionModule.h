@@ -1,1 +1,0 @@
-../../../TREmotion/Classes/Emotion/TREmotionModule.h

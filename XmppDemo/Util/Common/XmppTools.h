@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "XMPPFramework.h"
+#import "XMPPRoster.h"
+#import "XMPPRosterCoreDataStorage.h"
+#import "XMPPMessageArchivingCoreDataStorage.h"
+#import "XMPPvCardTemp.h"
+#import "XMPPvCardTempModule.h"
+#import "XMPPvCardAvatarModule.h"
+#import "XMPPReconnect.h"
+#import "XMPPvCardCoreDataStorage.h"
 
 typedef enum{
     XMPPResultSuccess,   //登陆成功
