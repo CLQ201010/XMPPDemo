@@ -6,7 +6,6 @@
 //  Copyright © 2016年 clq. All rights reserved.
 //
 
-#import "UserOperation.h"
 #import "MyTarBarController.h"
 #import "MyNavController.h"
 #import "LoginController.h"

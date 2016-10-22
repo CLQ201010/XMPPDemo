@@ -8,7 +8,6 @@
 
 #import "LoginController.h"
 #import "MyTextFiled.h"
-#import "UserOperation.h"
 #import "MyTarBarController.h"
 #import "RegisterController.h"
 

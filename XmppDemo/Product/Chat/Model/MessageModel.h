@@ -12,6 +12,7 @@
 
 @property (nonatomic,copy) NSString *body; //消息内容
 @property (nonatomic,copy) NSAttributedString *attributedBody;
+@property (nonatomic,copy) NSString *bodyType; // 1."text":普通文件；2."video":视频；3."audio":语音；4."image":图片
 
 @property (nonatomic,copy) NSString *time; //消息的时间
 @property (nonatomic,assign) BOOL isOwner; //是否是自己

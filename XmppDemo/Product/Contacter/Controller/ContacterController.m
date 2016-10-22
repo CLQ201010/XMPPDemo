@@ -104,7 +104,7 @@
         XMPPUserCoreDataStorageObject *user = [xmpp.rosterStorage userForJID:jid xmppStream:xmpp.xmppStream managedObjectContext:xmpp.rosterStorage.mainThreadManagedObjectContext];
         
         NSString *pinyin;
-        if (user.nickname == nil) {
+        if (user.nickname.length == 0) {
             pinyin = [NSString hanziToPinyin:user.jidStr];
         }
         else {

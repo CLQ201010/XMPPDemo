@@ -10,16 +10,8 @@
 #define XmppDemo_prefix_pch
 
 #import <UIKit/UIKit.h>
-#import "UIImage+CH.h"
-#import "UIBarButtonItem+CH.h"
-#import "UIView+MJ.h"
-#import "NSDate+CH.h"
-#import "Common.h"
-#import "BaseMethod.h"
-#import "UserOperation.h"
-#import "XmppTools.h"
-#import "FmdbTool.h"
-#import "FmbdMessage.h"
-#import "NSString+Util.h"
+
+#import "Util.h"
+#import "ThirdPath.h"
 
 #endif /* XmppDemo_prefix_pch */

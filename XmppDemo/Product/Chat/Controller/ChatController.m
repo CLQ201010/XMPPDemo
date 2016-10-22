@@ -11,20 +11,20 @@
 #import "ChatBottomView.h"
 #import "ChatViewCell.h"
 #import "SendTextView.h"
-#import "HMEmotion.h"
-#import "HMEmotionKeyboard.h"
-#import "HMEmotionTool.h"
 #import "MessageFrameModel.h"
 #import "MessageModel.h"
 #import "ContacterModel.h"
+#import "AddOtherView.h"
 
 
-@interface ChatController ()<ChatBottomViewDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,UITextViewDelegate>
+@interface ChatController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate, UITextViewDelegate, ChatBottomViewDelegate, LQImgPickerActionSheetDelegate, AddOtherViewDelegate>
 
 //底部栏控件
 @property (nonatomic,weak) ChatBottomView *chatBottomView;
 @property (nonatomic,weak) SendTextView *sendTextView;
 @property (nonatomic,strong) HMEmotionKeyboard *keyboard;
+@property (nonatomic,strong) AddOtherView *addOtherView;
+@property (nonatomic,strong) LQImgPickerActionSheet *imgPickActionSheet;
 
 //主视图
 @property (nonatomic,weak) UITableView *tableView;
@@ -84,6 +84,27 @@
     }
     
     return _keyboard;
+}
+
+- (AddOtherView *)addOtherView
+{
+    if (_addOtherView == nil) {
+        _addOtherView = [AddOtherView defaultView];
+        _addOtherView.delegate = self;
+    }
+    
+    return _addOtherView;
+}
+
+- (LQImgPickerActionSheet *)imgPickActionSheet
+{
+    if (_imgPickActionSheet == nil) {
+        _imgPickActionSheet = [[LQImgPickerActionSheet alloc] init];
+        _imgPickActionSheet.delegate = self;
+        _imgPickActionSheet.maxCount = 1;
+    }
+    
+    return _imgPickActionSheet;
 }
 
 - (void)setupUI
@@ -203,35 +224,33 @@
 - (void)dataToModel
 {
     for (XMPPMessageArchiving_Message_CoreDataObject *msg in self.resultController.fetchedObjects) {
-        MessageModel *msgModel = [[MessageModel alloc] init];
-        msgModel.body = msg.body;
-        msgModel.time = [NSString stringWithFormat:@"%@",msg.timestamp];
-        msgModel.otherPhoto = self.photoImg;
-        msgModel.headImage = self.headImage;
-        msgModel.to = msg.bareJidStr;
-        msgModel.isOwner = [[msg outgoing] boolValue];
-        msgModel.isHiddenTime = [self isHiddenTime:msg.timestamp toUser:msg.bareJidStr];
-        
-        MessageFrameModel *msgFrameModel = [[MessageFrameModel alloc] init];
-        msgFrameModel.messageModel = msgModel;
+        MessageFrameModel *msgFrameModel = [self msgToMessageFrameModel:msg];
         [self.frameModelArr addObject:msgFrameModel];
     }
+}
+
+- (MessageFrameModel *)msgToMessageFrameModel:(XMPPMessageArchiving_Message_CoreDataObject *)msg
+{
+    MessageModel *msgModel = [[MessageModel alloc] init];
+    msgModel.bodyType = [msg.message attributeStringValueForName:@"bodyType"];
+    msgModel.body = msg.body;
+    msgModel.time = [NSString stringWithFormat:@"%@",msg.timestamp];
+    msgModel.otherPhoto = self.photoImg;
+    msgModel.headImage = self.headImage;
+    msgModel.to = msg.bareJidStr;
+    msgModel.isOwner = [[msg outgoing] boolValue];
+    msgModel.isHiddenTime = [self isHiddenTime:msg.timestamp toUser:msg.bareJidStr];
+    
+    MessageFrameModel *msgFrameModel = [[MessageFrameModel alloc] init];
+    msgFrameModel.messageModel = msgModel;
+    
+    return msgFrameModel;
 }
 
 - (void)dataToModelWithMsg:(XMPPMessageArchiving_Message_CoreDataObject *)msg
 {
     if (msg.body != nil) {
-        MessageModel *msgModel = [[MessageModel alloc] init];
-        msgModel.body = msg.body;
-        msgModel.time = [NSString stringWithFormat:@"%@",msg.timestamp];
-        msgModel.to = msg.bareJidStr;
-        msgModel.otherPhoto = self.photoImg;
-        msgModel.headImage = self.headImage;
-        msgModel.isOwner = [[msg outgoing] boolValue];
-        msgModel.isHiddenTime = [self isHiddenTime:msg.timestamp toUser:msg.bareJidStr];
-        
-        MessageFrameModel *msgFrameModel = [[MessageFrameModel alloc] init];
-        msgFrameModel.messageModel = msgModel;
+        MessageFrameModel *msgFrameModel = [self msgToMessageFrameModel:msg];
         [self.frameModelArr addObject:msgFrameModel];
         
         [self.tableView reloadData];
@@ -289,7 +308,7 @@
         return;
     }
     
-    [self sendMsgWithText:self.sendTextView.realText bodyType:@"text"];
+    [self sendMsgWithText:self.sendTextView.realText messageType:@"chat" bodyType:@"text"];
     self.sendTextView.text = nil;
 }
 
@@ -377,7 +396,7 @@
     NSString *body = [NSString Trim:textView.text];
     if ([text isEqualToString:@"\n"]) {
         if (![body isEqualToString:@""]) {
-            [self sendMsgWithText:self.sendTextView.realText bodyType:@"text"];
+            [self sendMsgWithText:self.sendTextView.realText messageType:@"chat" bodyType:@"text"];
             self.sendTextView.text = nil;
         }
         
@@ -391,16 +410,16 @@
     
 }
 //发送聊天消息
-- (void)sendMsgWithText:(NSString *)text bodyType:(NSString *)bodyType {
-    XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:_contacterModel.jid];
-    
-    XmppTools *xmpp = [XmppTools sharedxmpp];
+- (void)sendMsgWithText:(NSString *)text messageType:(NSString *)messageType bodyType:(NSString *)bodyType {
+    XMPPMessage *msg = [XMPPMessage messageWithType:messageType to:_contacterModel.jid];
     [msg addAttributeWithName:@"bodyType" stringValue:bodyType];
     [msg addBody:text];
     
+    XmppTools *xmpp = [XmppTools sharedxmpp];
     [xmpp.xmppStream sendElement:msg];
 }
-//ChatBottomViewDelegate
+
+#pragma mark ChatBottomViewDelegate
 - (void)chatBottomView:(ChatBottomView *)bottomView buttonTag:(BottomButtonType)buttonTag
 {
     switch (buttonTag) {
@@ -440,7 +459,76 @@
 //打开添加图片
 - (void)addPicture
 {
+    self.isChangeKeyboard = YES;
+    if (self.sendTextView.inputView) {  //自定义的键盘
+        self.sendTextView.inputView = nil;
+        self.chatBottomView.addStatus = NO;
+    }
+    else { //系统自带的键盘
+        self.sendTextView.inputView = self.addOtherView;
+        self.chatBottomView.addStatus = YES;
+    }
     
+    [self.sendTextView resignFirstResponder];
+    self.isChangeKeyboard = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.sendTextView becomeFirstResponder];
+    });
+}
+
+#pragma mark AddOtherViewDelegate
+
+- (void)addOtherView:(AddOtherView *)addOtherView buttonTag:(AddButtonType)buttonTag
+{
+    switch (buttonTag) {
+        case AddButtonTypePhoto:
+            [self addPhoto];
+            break;
+            
+        case AddButtonTypeCamera:
+            [self openCamera];
+            break;
+        
+        case AddButtonTypeVideo:
+            [self addVideo];
+            break;
+        
+        case AddButtonTypeLocation:
+            [self openMap];
+            break;
+    }
+}
+
+- (void)addPhoto
+{
+    [self.imgPickActionSheet showImgPickerActionSheetInView:self];
+}
+
+- (void)openCamera
+{
+    
+}
+
+- (void)addVideo
+{
+    
+}
+
+- (void)openMap
+{
+    
+}
+
+#pragma mark LQImgPickerActionSheetDelegate
+//相册完成选择得到的图片
+- (void)getSelectImgWithALAssetArray:(NSArray*)ALAssetArray thumbnailImgImageArray:(NSArray*)thumbnailImgArray
+{
+    if (thumbnailImgArray.count > 0) {
+        UIImage *image = [thumbnailImgArray objectAtIndex:0];
+        NSData *data = UIImageJPEGRepresentation(image, (CGFloat)1.0);
+        NSString *base64str = [data base64EncodedStringWithOptions:0];
+        [self sendMsgWithText:base64str messageType:@"chat" bodyType:@"image"];
+    }
 }
 
 #pragma tableview设置

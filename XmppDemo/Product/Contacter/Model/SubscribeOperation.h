@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
-
 
 @interface SubscribeOperation : NSObject
 SingletonH(Subscribe)

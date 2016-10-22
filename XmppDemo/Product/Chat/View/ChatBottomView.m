@@ -84,8 +84,8 @@
     _emotionStatus = NO;
     
     if (addStatus) {
-        [self.faceBtn setBackgroundImage:[UIImage resizedImage:@"chat_bottombtn_add"] forState:UIControlStateNormal];
-        [self.faceBtn setBackgroundImage:[UIImage resizedImage:@"chat_bottombtn_addHL"] forState:UIControlStateHighlighted];
+        [self.addBtn setBackgroundImage:[UIImage resizedImage:@"chat_bottombtn_add"] forState:UIControlStateNormal];
+        [self.addBtn setBackgroundImage:[UIImage resizedImage:@"chat_bottombtn_addHL"] forState:UIControlStateHighlighted];
     }
     else {
         [self.faceBtn setBackgroundImage:[UIImage resizedImage:@"chat_bottombtn_emotion"] forState:UIControlStateNormal];

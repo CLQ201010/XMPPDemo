@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
 
 @interface UserOperation : NSObject
 SingletonH(user);

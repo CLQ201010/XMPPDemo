@@ -11,6 +11,7 @@
 #import "HMRegexResult.h"
 #import "HMEmotionAttachment.h"
 #import "HMEmotionTool.h"
+#import "UIImage+CH.h"
 
 @implementation MessageModel
 
@@ -60,7 +61,29 @@
         return;
     }
     
-    self.attributedBody = [self attributedStringWithText:self.body];
+    if ([self.bodyType isEqualToString:@"text"]) {
+        self.attributedBody = [self attributedStringWithText:self.body];
+    } else if ([self.bodyType isEqualToString:@"image"]) {
+        self.attributedBody = [self attributedStringWithImage:self.body];
+    } else if ([self.bodyType isEqualToString:@"video"]) {
+        
+    } else if ([self.bodyType isEqualToString:@"audio"]) {
+        
+    }
+}
+
+- (NSAttributedString *)attributedStringWithImage:(NSString *)attachment
+{
+    NSString *base64str = attachment;
+    NSData *data = [[NSData alloc]initWithBase64EncodedString:base64str options:0];
+    UIImage *image = [[UIImage alloc]initWithData:data];
+    
+    // 把图片在label中显示
+    NSTextAttachment *attach = [[NSTextAttachment alloc]init];
+    attach.image = [image scaleImageWithWidth:200];
+    NSAttributedString *attachStr = [NSAttributedString attributedStringWithAttachment:attach];
+    
+    return attachStr;
 }
 
 - (NSAttributedString *)attributedStringWithText:(NSString *)text

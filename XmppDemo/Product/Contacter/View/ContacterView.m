@@ -58,7 +58,7 @@
 {
     _contacterModel = contacterModel;
     self.headImgView.image = contacterModel.photo ? contacterModel.photo : [UIImage imageNamed:@"common_defaultProfile"];
-    if (contacterModel.nickname == nil) {
+    if (contacterModel.nickname.length == 0) {
         self.userNameLbl.text = contacterModel.name;
     }
     else {

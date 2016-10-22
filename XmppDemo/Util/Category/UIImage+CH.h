@@ -21,5 +21,6 @@
 +(instancetype)waterWithBgName:(NSString *)bg waterLogo:(NSString *)water;
 //裁剪图片为园
 +(instancetype)clipWithImageName:(NSString*)name bordersW:(CGFloat)bordersW borderColor:(UIColor *)borderColor;
-
+//图片缩放到指定宽度,小于指定宽度按原来尺寸显示
+- (UIImage *)scaleImageWithWidth:(CGFloat)width;
 @end
